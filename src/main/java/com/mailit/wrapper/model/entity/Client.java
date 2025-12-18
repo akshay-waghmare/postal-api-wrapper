@@ -66,6 +66,21 @@ public class Client {
     private RateLimitPlan plan = RateLimitPlan.FREE;
 
     /**
+     * Whether the client is active.
+     * If false, API access is denied.
+     */
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean active = true;
+
+    /**
+     * Optional expiration date for the API key.
+     * If present and in the past, API access is denied.
+     */
+    @Column(name = "expires_at")
+    private LocalDateTime expiresAt;
+
+    /**
      * Timestamp when the client was created.
      */
     @Column(name = "created_at", nullable = false, updatable = false)

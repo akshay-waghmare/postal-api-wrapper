@@ -81,8 +81,26 @@ Change a client's rate limit tier.
   }
   ```
 
+### Manage Status (Suspend / Expire)
+Control client access without permanently deleting keys.
+
+- **URL**: `PATCH /admin/clients/{clientId}/status`
+- **Body (Suspend)**:
+  ```json
+  {
+    "active": false
+  }
+  ```
+- **Body (Set Expiration)**:
+  ```json
+  {
+    "active": true,
+    "expiresAt": "2025-12-31T23:59:59"
+  }
+  ```
+
 ### Revoke Access
-Permanently disable a client's API key.
+Permanently disable a client's API key. For temporary suspension, use the **Manage Status** endpoint instead.
 
 - **URL**: `DELETE /admin/clients/{clientId}/api-key`
 

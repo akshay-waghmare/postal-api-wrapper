@@ -88,6 +88,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Rotate API Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/clients/:clientId/rotate-key",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"clients",
+								":clientId",
+								"rotate-key"
+							],
+							"variable": [
+								{
+									"key": "clientId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -186,6 +212,39 @@
 									"key": "trackingId",
 									"value": "trk_..."
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Batch Trackings",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-API-Key",
+								"value": "{{apiKey}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"trackingIds\": [\n        \"trk_123\",\n        \"trk_456\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/trackings/batch-get",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"trackings",
+								"batch-get"
 							]
 						}
 					},

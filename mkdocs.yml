@@ -1,0 +1,16 @@
+site_name: MailIt Postal Wrapper Documentation
+site_description: Documentation for MailIt Postal Wrapper API
+theme:
+  name: material
+nav:
+  - Home: index.md
+  - Client API:
+    - Authentication: client/authentication.md
+    - Trackings: client/trackings.md
+    - Statuses: client/statuses.md
+    - Pagination: client/pagination.md
+    - Errors: client/errors.md
+  - Admin API:
+    - Overview: admin/overview.md
+    - Key Management: admin/key-management.md
+    - Suspension: admin/suspension.md

@@ -55,6 +55,18 @@ public class AuthService {
 
         Client client = clientOpt.get();
 
+        // Check if client is active
+        if (!client.isActive()) {
+            log.debug("Client {} is inactive", client.getId());
+            return Optional.empty();
+        }
+
+        // Check if key is expired
+        if (client.getExpiresAt() != null && client.getExpiresAt().isBefore(java.time.LocalDateTime.now())) {
+            log.debug("API key expired for client {} at {}", client.getId(), client.getExpiresAt());
+            return Optional.empty();
+        }
+
         // Verify the full API key against the stored hash
         if (passwordEncoder.matches(apiKey, client.getApiKeyHash())) {
             log.trace("API key validated for client: {}", client.getId());
