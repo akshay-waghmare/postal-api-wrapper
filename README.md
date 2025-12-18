@@ -8,6 +8,7 @@ A TrackingMore wrapper API providing normalized shipment tracking with multi-ten
 - **Batch Tracking Retrieval**: Fetch status for up to 40 shipments in a single request
 - **Normalized Statuses**: Consistent status values across all carriers
 - **Multi-Tenant**: Isolated data per API client with Stripe-style API keys
+- **Access Control**: Suspend clients or set API key expiration dates
 - **Rate Limiting**: Tiered rate limits (FREE, STARTER, PRO, ENTERPRISE)
 - **Soft Delete**: Audit-friendly tracking deletion
 - **OpenAPI Documentation**: Full Swagger UI at `/swagger-ui.html`
@@ -55,7 +56,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```bash
 # Set environment variables
 export SPRING_PROFILES_ACTIVE=prod
-export DATABASE_URL=jdbc:postgresql://localhost:5432/mailit
+export DATABASE_URL=jdbc:postgresql://localhost:5433/mailit
 export DATABASE_USERNAME=mailit
 export DATABASE_PASSWORD=your-secure-password
 export TRACKINGMORE_API_KEY=your-trackingmore-api-key
