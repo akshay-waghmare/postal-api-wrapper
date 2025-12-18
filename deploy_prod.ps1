@@ -44,7 +44,7 @@ docker-compose -f docker-compose.prod.yml ps
 Write-Host ""
 Write-Host "=== Health Check ===" -ForegroundColor Cyan
 try {
-    $health = Invoke-RestMethod -Uri "http://localhost:8080/actuator/health" -ErrorAction SilentlyContinue
+    $health = Invoke-RestMethod -Uri "http://localhost:9000/actuator/health" -ErrorAction SilentlyContinue
     Write-Host "Status: $($health.status)" -ForegroundColor Green
 } catch {
     Write-Host "API still starting... check again in a few seconds" -ForegroundColor Yellow

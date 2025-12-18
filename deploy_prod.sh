@@ -44,7 +44,7 @@ docker-compose -f docker-compose.prod.yml ps
 
 echo ""
 echo "=== Health Check ==="
-curl -s http://localhost:8080/actuator/health | grep -o '"status":"[^"]*"' || echo "Waiting for API..."
+curl -s http://localhost:9000/actuator/health | grep -o '"status":"[^"]*"' || echo "Waiting for API..."
 
 echo ""
 echo "=== Deployment Complete ==="
