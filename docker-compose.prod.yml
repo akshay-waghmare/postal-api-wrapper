@@ -38,6 +38,16 @@ services:
       - mailit-network
     restart: always
 
+  # Documentation Portal
+  docs:
+    image: macubex/mailit-docs:latest
+    container_name: mailit-docs
+    ports:
+      - "9001:80"
+    restart: always
+    networks:
+      - mailit-network
+
 volumes:
   postgres_data:
 

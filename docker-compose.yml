@@ -40,6 +40,17 @@ services:
       - mailit-network
     restart: unless-stopped
 
+  # Documentation Portal
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile.docs
+    container_name: mailit-docs
+    ports:
+      - "9001:80"
+    networks:
+      - mailit-network
+
 volumes:
   postgres_data:
 
