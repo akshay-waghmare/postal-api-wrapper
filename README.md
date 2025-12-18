@@ -45,9 +45,9 @@ mvn clean install
 # Run with H2 database
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 
-# API available at http://localhost:8080
-# Swagger UI at http://localhost:8080/swagger-ui.html
-# H2 Console at http://localhost:8080/h2-console
+# API available at http://localhost:8090
+# Swagger UI at http://localhost:8090/swagger-ui.html
+# H2 Console at http://localhost:8090/h2-console
 ```
 
 ### Production Mode
@@ -91,7 +91,7 @@ docker build -t mailit-wrapper:latest .
 # Run with external PostgreSQL
 docker run -d \
   --name mailit-api \
-  -p 8080:8080 \
+  -p 8090:8080 \
   -e SPRING_PROFILES_ACTIVE=prod \
   -e SPRING_DATASOURCE_URL=jdbc:postgresql://your-db-host:5432/mailit \
   -e SPRING_DATASOURCE_USERNAME=mailit \

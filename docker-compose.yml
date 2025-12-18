@@ -32,7 +32,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-mailit_secret}
       TRACKINGMORE_API_KEY: ${TRACKINGMORE_API_KEY}
     ports:
-      - "8080:8080"
+      - "9000:8080"
     depends_on:
       postgres:
         condition: service_healthy
