@@ -118,6 +118,30 @@ docker push <your-dockerhub-username>/mailit-wrapper:0.0.1
 docker push <your-dockerhub-username>/mailit-wrapper:latest
 ```
 
+### Production Deployment (Pre-built Image)
+
+To deploy using the pre-built image from Docker Hub (`macubex/mailit-wrapper`):
+
+1.  **Copy files to server**:
+    *   `docker-compose.prod.yml`
+    *   `.env.example`
+    *   `deploy_prod.sh` (Linux) or `deploy_prod.ps1` (Windows)
+
+2.  **Configure**:
+    ```bash
+    cp .env.example .env
+    # Edit .env with your API keys
+    ```
+
+3.  **Run**:
+    ```bash
+    # Linux/Mac
+    ./deploy_prod.sh
+
+    # Windows
+    .\deploy_prod.ps1
+    ```
+
 ## API Overview
 
 ### Authentication
