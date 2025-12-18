@@ -179,7 +179,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:9000",
+			"value": "http://139.59.46.120:9000",
 			"type": "string"
 		},
 		{
