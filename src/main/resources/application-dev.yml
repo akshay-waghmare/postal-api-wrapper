@@ -1,0 +1,53 @@
+# =====================================================
+# MailIt Wrapper API - Development Profile
+# =====================================================
+# Uses H2 in-memory database for local development
+
+spring:
+  # H2 Database
+  datasource:
+    url: jdbc:h2:mem:mailit_wrapper_dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+
+  # H2 Console (accessible at /h2-console)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+  # JPA settings for dev
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  # Flyway - baseline for fresh H2 databases
+  flyway:
+    baseline-on-migrate: true
+
+# =====================================================
+# Rate Limiting - In-Memory for Dev
+# =====================================================
+rate-limiting:
+  backend: memory
+
+# =====================================================
+# TrackingMore - Real API Key
+# =====================================================
+trackingmore:
+  api:
+    key: r1nocsfe-i9ui-riyw-86zg-oj1ma3u5ty2p
+
+# =====================================================
+# Logging - Verbose for Dev
+# =====================================================
+logging:
+  level:
+    com.mailit.wrapper: DEBUG
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE

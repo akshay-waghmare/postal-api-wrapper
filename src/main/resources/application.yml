@@ -1,0 +1,111 @@
+# =====================================================
+# MailIt Wrapper API - Common Configuration
+# =====================================================
+# This file contains shared configuration across all profiles.
+# Profile-specific settings are in application-{profile}.yml
+
+spring:
+  application:
+    name: mailit-wrapper
+
+  # Active profile - override with SPRING_PROFILES_ACTIVE env var
+  profiles:
+    active: dev
+
+  # JPA / Hibernate
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate  # Flyway handles migrations
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  # Flyway migrations
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    baseline-on-migrate: false
+
+# =====================================================
+# Server Configuration
+# =====================================================
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# =====================================================
+# TrackingMore API Configuration
+# =====================================================
+trackingmore:
+  api:
+    base-url: https://api.trackingmore.com/v4
+    # API key must be set via environment variable: TRACKINGMORE_API_KEY
+    key: ${TRACKINGMORE_API_KEY:}
+    timeout:
+      connect: 5000   # 5 seconds
+      read: 30000     # 30 seconds
+
+# =====================================================
+# Rate Limiting Configuration
+# =====================================================
+rate-limiting:
+  # Backend: memory (dev) or redis (prod)
+  backend: memory
+  # Default limits by plan (can be overridden per client)
+  plans:
+    free:
+      requests-per-day: 100
+      trackings-per-batch: 10
+    starter:
+      requests-per-day: 1000
+      trackings-per-batch: 40
+    pro:
+      requests-per-day: 10000
+      trackings-per-batch: 40
+    enterprise:
+      requests-per-day: -1  # unlimited
+      trackings-per-batch: 40
+
+# =====================================================
+# OpenAPI / Swagger Configuration
+# =====================================================
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+# =====================================================
+# Logging Configuration
+# =====================================================
+logging:
+  level:
+    root: INFO
+    com.mailit.wrapper: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{correlationId:-NO_CORRELATION_ID}] %-5level %logger{36} - %msg%n"
+
+# =====================================================
+# Actuator Configuration (for health checks)
+# =====================================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized

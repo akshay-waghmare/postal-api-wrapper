@@ -1,0 +1,69 @@
+# =====================================================
+# MailIt Wrapper API - Production Profile
+# =====================================================
+# Uses PostgreSQL and Redis-backed rate limiting
+
+spring:
+  # PostgreSQL Database
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/mailit_wrapper}}
+    driver-class-name: org.postgresql.Driver
+    username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:mailit}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:}}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+
+  # H2 Console disabled in production
+  h2:
+    console:
+      enabled: false
+
+  # JPA settings for prod
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+
+  # Flyway - strict validation in prod
+  flyway:
+    baseline-on-migrate: false
+    validate-on-migrate: true
+
+# =====================================================
+# Rate Limiting - Redis for Production
+# =====================================================
+rate-limiting:
+  backend: redis
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
+# =====================================================
+# TrackingMore - Production Key (required)
+# =====================================================
+trackingmore:
+  api:
+    key: ${TRACKINGMORE_API_KEY}
+
+# =====================================================
+# Swagger - Disable in Production (optional)
+# =====================================================
+springdoc:
+  swagger-ui:
+    enabled: ${SWAGGER_ENABLED:false}
+
+# =====================================================
+# Logging - Less verbose for Production
+# =====================================================
+logging:
+  level:
+    root: WARN
+    com.mailit.wrapper: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN

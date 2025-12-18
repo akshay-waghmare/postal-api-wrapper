@@ -1,0 +1,48 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: mailit-postgres
+    environment:
+      POSTGRES_DB: mailit_wrapper
+      POSTGRES_USER: mailit
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-mailit_secret}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mailit -d mailit_wrapper"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mailit-network
+
+  # MailIt Wrapper API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mailit-api
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mailit_wrapper
+      SPRING_DATASOURCE_USERNAME: mailit
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-mailit_secret}
+      TRACKINGMORE_API_KEY: ${TRACKINGMORE_API_KEY}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mailit-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  mailit-network:
+    driver: bridge

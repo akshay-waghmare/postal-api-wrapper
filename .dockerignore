@@ -1,0 +1,15 @@
+# Docker ignore file
+target/
+*.jar
+*.class
+.git
+.gitignore
+.idea/
+*.iml
+.vscode/
+*.md
+!README.md
+*.log
+.env
+*.env.local
+node_modules/
