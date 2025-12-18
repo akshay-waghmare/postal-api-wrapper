@@ -49,6 +49,19 @@ mvn spring-boot:run -Dspring-boot.run.profiles=dev
 # API available at http://localhost:9000
 # Swagger UI at http://localhost:9000/swagger-ui.html
 # H2 Console at http://localhost:9000/h2-console
+
+## Testing
+
+### Swagger UI
+Interactive API documentation is available at:
+- **Local**: [http://localhost:9000/swagger-ui.html](http://localhost:9000/swagger-ui.html)
+- **Production**: `http://<your-server-ip>:9000/swagger-ui.html`
+
+### Postman
+A Postman collection is included in the repository: `postman_collection.json`.
+1. Import this file into Postman.
+2. Set the `baseUrl` variable (e.g., `http://localhost:9000` or `http://139.59.46.120:9000`).
+3. Set the `apiKey` variable (obtained from the `/admin/clients` endpoint).
 ```
 
 ### Production Mode
