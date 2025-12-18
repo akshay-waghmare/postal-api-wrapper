@@ -50,6 +50,23 @@ public interface ClientService {
      * @return the updated client
      */
     Client updatePlan(Long clientId, RateLimitPlan plan);
+
+    /**
+     * Update a client's status and expiration.
+     * 
+     * @param clientId the client ID
+     * @param active whether the client is active
+     * @param expiresAt optional expiration date (null to clear)
+     * @return the updated client
+     */
+    Client updateStatus(Long clientId, boolean active, java.time.LocalDateTime expiresAt);
+
+    /**
+     * List all clients.
+     * 
+     * @return list of all clients
+     */
+    java.util.List<Client> getAllClients();
     
     /**
      * Result of creating or rotating an API key.

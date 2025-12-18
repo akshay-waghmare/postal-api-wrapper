@@ -122,6 +122,27 @@ public class ClientServiceImpl implements ClientService {
         
         return client;
     }
+
+    @Override
+    @Transactional
+    public Client updateStatus(Long clientId, boolean active, LocalDateTime expiresAt) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new TrackingNotFoundException("Client not found: " + clientId));
+        
+        client.setActive(active);
+        client.setExpiresAt(expiresAt);
+        client.setUpdatedAt(LocalDateTime.now());
+        
+        client = clientRepository.save(client);
+        logger.info("Updated status for client {}: active={}, expiresAt={}", clientId, active, expiresAt);
+        
+        return client;
+    }
+
+    @Override
+    public java.util.List<Client> getAllClients() {
+        return clientRepository.findAll();
+    }
     
     private String generatePrefix() {
         byte[] bytes = new byte[PREFIX_LENGTH];

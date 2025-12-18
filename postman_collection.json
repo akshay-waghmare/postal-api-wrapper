@@ -37,6 +37,24 @@
 					"response": []
 				},
 				{
+					"name": "List Clients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/clients",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update Client Status",
 					"request": {
 						"method": "PATCH",

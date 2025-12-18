@@ -48,10 +48,31 @@ public class AdminController {
                 result.client().getName(),
                 result.client().getApiKeyPrefix(),
                 result.rawApiKey(),
-                result.client().getPlan()
+                result.client().getPlan(),
+                result.client().isActive(),
+                result.client().getExpiresAt()
         );
         
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    /**
+     * List all clients.
+     */
+    @GetMapping("/clients")
+    public ResponseEntity<java.util.List<ClientDto>> listClients() {
+        java.util.List<ClientDto> clients = clientService.getAllClients().stream()
+                .map(client -> new ClientDto(
+                        client.getId(),
+                        client.getName(),
+                        client.getApiKeyPrefix(),
+                        client.getPlan(),
+                        client.isActive(),
+                        client.getExpiresAt()
+                ))
+                .toList();
+        
+        return ResponseEntity.ok(clients);
     }
     
     /**
@@ -68,7 +89,9 @@ public class AdminController {
                 result.client().getName(),
                 result.client().getApiKeyPrefix(),
                 result.rawApiKey(),
-                result.client().getPlan()
+                result.client().getPlan(),
+                result.client().isActive(),
+                result.client().getExpiresAt()
         );
         
         return ResponseEntity.ok(response);
@@ -97,7 +120,31 @@ public class AdminController {
                 client.getId(),
                 client.getName(),
                 client.getApiKeyPrefix(),
-                client.getPlan()
+                client.getPlan(),
+                client.isActive(),
+                client.getExpiresAt()
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Update a client's status and expiration.
+     */
+    @PatchMapping("/clients/{clientId}/status")
+    public ResponseEntity<ClientDto> updateStatus(
+            @PathVariable Long clientId,
+            @RequestBody UpdateStatusRequest request) {
+        
+        Client client = clientService.updateStatus(clientId, request.active(), request.expiresAt());
+        
+        ClientDto response = new ClientDto(
+                client.getId(),
+                client.getName(),
+                client.getApiKeyPrefix(),
+                client.getPlan(),
+                client.isActive(),
+                client.getExpiresAt()
         );
         
         return ResponseEntity.ok(response);
@@ -116,17 +163,26 @@ public class AdminController {
             String name,
             String apiKeyPrefix,
             String apiKey, // Raw key - shown only once!
-            RateLimitPlan plan
+            RateLimitPlan plan,
+            boolean active,
+            java.time.LocalDateTime expiresAt
     ) {}
     
     public record UpdatePlanRequest(
             RateLimitPlan plan
+    ) {}
+
+    public record UpdateStatusRequest(
+            boolean active,
+            java.time.LocalDateTime expiresAt
     ) {}
     
     public record ClientDto(
             Long id,
             String name,
             String apiKeyPrefix,
-            RateLimitPlan plan
+            RateLimitPlan plan,
+            boolean active,
+            java.time.LocalDateTime expiresAt
     ) {}
 }
